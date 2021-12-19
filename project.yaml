@@ -1,0 +1,28 @@
+specVersion: 0.2.0
+name: counsil-proposals
+version: 1.0.0
+description: Exercise 'Counsillor Proposals' of the HeroCourse's 3rd module
+repository: git@github.com:UsmanAAV/subquery-module3-many-to-many.git
+schema:
+  file: ./schema.graphql
+network:
+  genesisHash: '0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3'
+  endpoint: wss://polkadot.api.onfinality.io/public-ws
+  dictionary: https://api.subquery.network/sq/subquery/dictionary-polkadot
+dataSources:
+  - name: main
+    kind: substrate/Runtime
+    startBlock: 800000
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: handleCouncilProposedEvent
+          kind: substrate/EventHandler
+          filter:
+            module: council
+            method: Proposed
+        - handler: handleCouncilVotedEvent
+          kind: substrate/EventHandler
+          filter:
+            module: council
+            method: Voted
